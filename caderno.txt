@@ -1,0 +1,255 @@
+lambda expressions java:
+	-they can only be used with some type of interfaces.
+	
+	-they allow to just pass the implementation of the method, the public is not needed and not the name, nei	 ther the tyoe of return and the operator is just '->'.
+	
+	- the lambda passes the implemntation as a method and we can store it as a variable.
+	
+	EX:
+		className nameOfVariable = () -> sysout("teste");
+		-what this does is store the lambda expression wiht no paramethers () and tell it to print out te		teste, and it is stored as a variable that i can use, for example i can make like this
+		- printable(nameOfVariable) and it will print the teste.
+
+	-It needs to have a interface to be used, a functional interface to be exact, this means that the interfa	ce only has one abstract method.
+	______________________________________________
+	EX:
+
+		public interface MyInterface{
+			
+			public void message();
+		}	
+	--------------------------------------------	
+		
+	MyInterface myInterface =  () -> sysout("helo world")
+
+
+	//to use the lambda i need to instaciate the interface and call the method:
+	
+	- myInterface.message();
+
+
+	_______________________________________________
+
+	Referencia a métodos:
+		
+	- Its basically the same as saying the type of the thing in the stream, and then saying what you want him	to do.
+	EX:
+		String :: indexOf; 
+	
+	- What this does is for everything in the stream that is a String it will get the indexOf that string.
+	--------------------------------
+	- Another example is:
+		String[] names = { "Steve", "Rick", "Aditya", "Negan", "Lucy", "Sansa"};
+		Arrays.sort(names, String::compareToIgnoreCase);
+		for(String str: names){
+			System.out.println(str);
+		}
+
+	- What this does is, it sorts the list names, by the comparation, so, we say that everything in the name
+	List is a String and we want to compareToIgnoreCase.
+	String::compareToIgnoreCase.
+
+	-------------------------------------
+
+	-there are various types of method references.
+	
+	- we can have the class :: staticMethod for example Math::abs - we want the static method abs of Math
+ 	class.
+		
+	- Obj :: method this is refering an instance method of a particular objetct.
+
+	- Type :: method  this makes it use a method of the type we haded, for instance String :: compareTo it
+	will use the method compareTo of the String Type.
+
+	- Class :: new its used to reference a constructor.
+
+____________________________________________________________________________________________________
+
+Streams:
+
+	- The stream api is used to process collections of objects.
+
+	- The difference between a collection and a stream is the fact the streams dont sotre data, they just 
+	proccess it in some way, one operation on a stream produces a result but doenst change the source 
+
+	- We can also say that the list "Exists" and the stream "doesnt".
+
+	- The filter() method is specially usefull when we want the data to match a certain condition.
+	
+	- The map() method allows us to transform each element, for example map (String :: toUpperCase), it 
+	changes every data to upper case.
+
+	- The sorted() method allows to sort the content of the list.
+
+	- The collect() method allows us to convert back the stream to a collection, for example .toList() turns 	the stream to a list.
+
+	- The count() method allows us to literally count xD.
+
+	EX:
+	
+	Optional<Integer> result = numbers.stream().filter(n -> n>10).findFirst();
+	result.ifPresent(System.out :: println) (method reference of a particular method of a particular object).	
+	-We are using the findFirst ot find the first number that satisfies the condition, and then printing it
+	by using a method refernce (Obj :: method).
+_______________________________________________________
+
+	Map<String, Integer> map= 
+		people.stream.collector(collectors.toMap(p -> p.getname, p -> p.age));
+
+	-Its storing the content of the People collection on a Map with a string (the name) and the age of a 
+	person (p.age).
+_______________________________________________________
+
+	List<Integer> numbers = list.of(1,2,2,3,3,4);
+	
+	List<Integer> unique = numbers.stream().distinct.doList();
+
+	-this uses the numbers list and turns it in a stream and finds the distincts, and finally adds them to 
+	the list.
+_______________________________________________________
+
+	Optional<Person> oldest  = person.stream().max(comparator.comparing(p-> p.age));
+
+	oldest.ifPresent(p-> system.out.println(p.name));
+
+	- This code finds the maximum, using the API of the Optional 
+
+---------------------------------------------------------------------------
+
+Questions of java tests:
+
+	-anyMatch() - is used to terminate a operation as soon as the given condition is met
+	on the stream.
+
+	- Parallel Streams and sequential streams - the parallel streams dont always help,
+	for example on small datasets it will not be good 
+
+
+	-------
+	Files:
+		
+		-Its not safe to not handle the exceptions.
+
+		-Its not possibe to have multiple catch blocks catching the same exception,
+		each catch must be with different  exceptions.
+
+		- Java NIO does offer a set of classes of higher performance compared to the
+		IO, como por exemplo os buffers e canais.
+
+		- Java NIO offers asynchronous file read and write operations, it supports 
+		asynch operations that let the program continue its execution of the IO in the
+		background.
+
+		- Try-with-resources ensures the automatic clocing of resources like open
+		files even in exceptions, o try-catch doesnt do this automatically.
+
+		- The main purpose o fthe finaly block is to execute code to release external
+		resources, it executes with or without exception, letting liberate the code.
+
+		- FileReader and charset, its important to specify the charset as different 
+		encodings can represent the same byte with different characters.
+	
+	-------
+	Lambda:
+		
+		- the difference between verbose and concise, i didnt knew it.
+
+		- they dont always need the curly braces, they can be made 
+		without them.
+
+
+_________________________________________________
+
+EXCEPTIONS:
+
+	-we can treat exception by solving them on the spot or to delegate the erorr.
+		
+		- solve on the spot, we use the try{ ...} catch { ....} method.
+		-to delegate the error we create a new object of exception(throw) which we will tell it to treat it. throw new ....(exception). although it better to treat it on the spot.
+	
+	- we can also manipulate the exceptions by using the block of try-with-resources, this will ensure that the resources will be closed, such as files or buffers. The try-with-resources
+	works by putting the code that can generate exceptions and then the catches to catch those exceptions.
+
+	- we can propagate errors with sucessive calls.
+
+	- the order of the catches is important.
+
+	-When we make methods that can generate exceptions we need to use the throws declaration.
+
+	-we can create new exceptions by using the inheritance 
+
+	-------------------
+	
+	- We can propagate the errors without execptions this is done by calling other methods when we encounter a error.
+	Ex:
+		method1 {
+			 errorCodeType error;
+ 			error = call method2;
+ 			if (error) doErrorProcessing;
+ 			else proceed; }
+		
+		errorCodeType method2 {
+ 			errorCodeType error;
+			error = call method3;
+ 			if (error) return error;
+			 else proceed; }
+  ___________________________________________________
+
+	types of exceptions, checked and unchecked
+
+		- The checked exceptions are the ones we need to tell the compiler how are we going to solve them, by the try catch, or the throw.
+
+		- The unchecked are errors of programing or system, of the type kava.lang.RuntimeException.
+
+		- when we make methods that can generate an exception (checked) we need sign them explicitly.
+
+		- the good practice is to treat always the exceptions or to delegate them
+
+
+---------------------------------------------------------
+
+	Functional interfaces:
+		
+		- the functional interfaces are interfaces that only contain one abstract method
+		- for example:
+			
+			@FunctionalInterface
+			interface MyNum {
+ 				double getNum(double n);
+			}
+		
+		-Then in order for us to use a lambda expression we need to make it an implementation of that object for example:
+
+		public class Lamdba1 {
+			 public static void main(String[] args) {
+			 MyNum n1 = (x) -> x+1; 
+			// qualquer expressão que transforme double em double
+			System.out.println(n1.getNum(10));
+			...
+		- we create the implementation of that interface by using a lambda expression, we can only do this with functional interfaces.
+
+		- Lambda expressions can be parameters.
+
+		- Lambda expressions can also be arguments for a variable
+
+		-Ex:
+			String inStr = "Lambdas add power to Java";
+			String outStr = stringOp((str) -> str.toUpperCase(), inStr);
+			
+			-what this does is it goes to the class (stringOp) that receives a  func(interface) and instead it gives it a lambda function and then passes the inStr to be the 
+			object.
+_________________________________________________________________
+
+		- the consumer<t> interface only receives one argument the consumer interface has no return value.
+
+		-the Suplier interface doesnt take any input or argument but it returns a single output.
+		ex: Supplier<Double> randomValue = () -> Math.random();  ( this doenst receive anything and yet it returns the random number.)
+		
+		- the predicate<T> interface represents a boolean-valued function of one argument
+
+		- the function is an interface that receives only a single argument and returns a value after that processing.
+
+		- Both java IO and java NIO offer options of buffered writing, wich they improve performance for wrtiing lare files with frquent
+		operations. 
+
+		
